@@ -3,9 +3,7 @@ import axiosInstance from './axios';
 export const signup = (formData) => axiosInstance.post('user/sign-up', formData);
 export const signIn = (formData) => axiosInstance.post('user/sign-in', formData);
 export const verifyOtp = (data) => axiosInstance.post('user/verify', data);
-// export const googleAuth = (formData) => axiosInstance.post('user/google-auth', formData);
-export const googleAuth = ({ token }) =>
-  axiosInstance.post("user/google-auth", { token });
+export const googleAuth = (formData) => axiosInstance.post('user/google-auth', formData);
 export const forgotPassword = (email) => axiosInstance.post('user/forgot-password', { email });
 export const resetPassword = (formData) => axiosInstance.post('user/reset-password', formData);
 export const getProfile = () => axiosInstance.get('/profile');

@@ -80,16 +80,10 @@ export const signUpAction = async (req, res) => {
 // Google Auth
 export const googleAuthAction = async (req, res) => {
   try {
-    const { token } = req.body;
-    if (!token) return res.status(400).json({ error: "Token is required" });
-
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID
-    });
-
-    const payload = ticket.getPayload();
-    const { email, name } = payload;
+    const { email, name, googleId } = req.body;
+    if (!email || !googleId) {
+      return res.status(400).json({ error: "Email and Google ID are required" });
+    }
 
     let user = await User.findOne({ email });
     if (!user) {
@@ -102,11 +96,9 @@ export const googleAuthAction = async (req, res) => {
     }
 
     const JWT_SECRET = process.env.JWT_SECRET;
-    if (!JWT_SECRET) {
-      return res.status(500).json({ error: "JWT_SECRET not set in .env file" });
-    }
+    if (!JWT_SECRET) return res.status(500).json({ error: "JWT_SECRET not set" });
 
-    const authToken = jwt.sign({
+    const token = jwt.sign({
       id: user._id,
       email: user.email,
       role: user.role
@@ -114,7 +106,7 @@ export const googleAuthAction = async (req, res) => {
 
     res.status(200).json({
       message: "Google login successful",
-      token: authToken,
+      token,
       user
     });
   } catch (err) {
@@ -122,6 +114,7 @@ export const googleAuthAction = async (req, res) => {
     res.status(500).json({ error: "Google Auth Failed", detail: err.message });
   }
 };
+
 
 export const verifyAccount = async (req, res) => {
   const { email, otp } = req.body;
