@@ -1,0 +1,237 @@
+.admission-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 0 20px;
+  gap: 40px;
+}
+
+/* ---------- Left Section ---------- */
+.admission-left {
+  flex: 1;
+  min-width: 320px;
+}
+
+.free-tag {
+  background-color: #1F3A5F;
+  color: #fff;
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.ah {
+  font-size: 2.3rem;
+  font-weight: 1000;
+  color: #1f2937;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.ap {
+  font-size: 1.05rem;
+  color: #4b5563;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+/* ---------- Steps List ---------- */
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.step-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.step-icon {
+  font-size: 1.6rem;
+  color: #2563eb;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.ah4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.ap4 {
+  margin: 4px 0 0;
+  font-size: 0.95rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+/* ---------- Right Section ---------- */
+.admission-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.admission-right img {
+  width: 500px;
+  height: 600px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------- CTA Section ---------- */
+.cta-section {
+  background-color: #f3f4f6;
+  padding: 40px 20px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.cta-section h2 {
+  font-size: 2rem;
+  color: #0f172a;
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  background-color:#1F3A5F;
+  color: white;
+  padding: 12px 30px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #0e1a2a;
+  transform: scale(1.05);
+}
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .admission-container {
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .admission-left h1 {
+    font-size: 2rem;
+  }
+
+  .admission-right {
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+}
+
+/* ---------- Popup Form ---------- */
+.popup-form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.popup-form h3{
+  text-align: center;
+}
+
+.popup-form form {
+  position: relative;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 1000px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Close Button */
+.close-btn {
+  background:none;
+  position: absolute;
+  top: 2px;
+  right: 15px;
+  font-size: 34px;
+  color: #333;
+  border: none;
+  cursor: pointer;
+   width: 100px;  
+    padding: 2px 14px;    
+}
+
+/* ---------- Form Inputs ---------- */
+.popup-form input[type="text"],
+.popup-form input[type="file"],
+.popup-form input[type="email"],
+.popup-form select,
+.popup-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* ---------- Form Grid ---------- */
+.popup-form .form-step {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+/* ---------- Buttons ---------- */
+ .buttons {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  gap: 30px;
+}
+
+.buttonss {
+  display: flex;
+  justify-content:flex-start; 
+  gap: 10px;                
+  margin-top: 10px;
+}
+
+.n, .na {
+  background-color: #1F3A5F;
+  color: white;
+  padding: 10px 4px;
+  top: 50%;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100px;
+}
+
+.n:hover, .na:hover {
+  background-color: #0e1622;
+}
+

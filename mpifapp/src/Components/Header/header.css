@@ -1,0 +1,111 @@
+.navbar {
+  background-color: #2c3e50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+}
+
+.navbar {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+header, .navbar * {
+  margin: 0;
+  padding: 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.logo-img {
+  padding-top: 10px;
+  height: 80px;
+  vertical-align: middle;
+  padding-left: 30px;
+}
+
+.logo-text {
+  margin-left: 0;
+  color:rgb(203, 199, 199);
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.navbar nav {
+  display: flex;
+  align-items: center;
+  padding-right: 40px;
+}
+
+.navbar nav a,
+.navbar nav .nav-link {
+  position: relative; 
+  margin-left: 20px;
+  padding-right: 0px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #fdfdfd;
+  transition: color 0.3s ease;
+  font-size: 16px;
+}
+
+
+.navbar nav a:not(.profile-link)::after,
+.navbar nav .nav-link::after {
+  content: '';
+  height: 2px;
+  width: 0;
+  background: #00bcd4;
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  transition: width 0.2s;
+}
+
+.navbar nav a:not(.profile-link):hover,
+.navbar nav .nav-link:hover {
+  color: #00bcd4;
+}
+
+.navbar nav a:not(.profile-link):hover::after,
+.navbar nav .nav-link:hover::after {
+  width: 100%;
+}
+
+.logout-btn {
+  border-radius: 10px;
+  background: red;
+  color: #fdfdfd;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 20px;
+  transition: color 0.3s ease;
+}
+
+.signup-btn {
+  background:#00bcd4;
+  color: #00bcd4;
+  padding: 10px 24px;
+  border: 2px solid #00bcd4;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  min-width:100px;
+}
+
+.signup-btn:hover {
+  color: white !important;
+  background-color: #00bcd4 !important;
+  text-decoration: none;
+  cursor: pointer;
+}

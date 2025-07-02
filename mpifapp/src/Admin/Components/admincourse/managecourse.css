@@ -1,0 +1,163 @@
+.styled-full-form {
+  width: 100vw;
+  padding: 10px 60px;
+  box-sizing: border-box;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease;
+  border-radius: 8px;
+  margin-top: 0;
+}
+
+.form-heading {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #0d6efd;
+  width: 100%;
+}
+
+
+label {
+  display: block;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #000;
+}
+
+.required {
+  color: red;
+  margin-left: 4px;
+}
+
+input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.form-column {
+  flex: 1;
+  min-width: 300px;
+}
+
+
+.inline-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+
+.add-btn,
+.minus-btn,
+.submit-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.add-btn {
+  background-color: #0d6efd;
+  color: white;
+  margin-top: 8px;
+}
+
+.minus-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.submit-btn {
+  background-color:#0c1625;
+  color: white;
+  width: 20%;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font: 1.5em sans-serif;
+  font-weight: bold;
+  margin-top: 30px;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #146c43;
+}
+
+.button-wrapper {
+  width: 100%;
+  text-align: center;
+}
+
+.error {
+  background-color: #ffe0e0;
+  color: #b30000;
+  padding: 12px;
+  border-left: 5px solid red;
+  margin: 10px 60px;
+  border-radius: 4px;
+}
+
+
+
+.submit-btn:hover {
+  background-color:#0c1625;
+}
+ .c-title{
+  background-color:#ccc;
+  text-align: center;
+  margin: 50px;
+  padding: 10px 20px ;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.edit-btn {
+  background-color: #f39c12;
+  color: #fff;
+}
+
+.delete-btn {
+  background-color: #c0392b;
+  color: #fff;
+}
+
+.edit-btn:hover {
+  background-color: #e67e22;
+}
+
+.delete-btn:hover {
+  background-color: #a93226;
+}

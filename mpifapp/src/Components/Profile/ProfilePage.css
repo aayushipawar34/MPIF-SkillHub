@@ -1,0 +1,141 @@
+body {
+  background: white;
+}
+
+.profile-root-bg {
+  display: flex;
+  min-height: 100vh;
+  background: #f3f5f9;
+}
+
+
+.profile-main-content {
+  flex: 1;
+  padding: 40px 48px 40px 48px;
+}
+
+.profile-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+
+.profile-topbar-date {
+  color: #3e4c59;
+  font-size: 1.06rem;
+}
+
+.profile-section {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(44,62,80,0.07);
+  padding: 28px 32px 22px 32px;
+  margin-bottom: 28px;
+}
+
+.profile-section-overview {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 30px;
+  background: #f6f8fa;
+  box-shadow: none;
+  padding: 18px 32px;
+}
+
+.profile-overview-img img {
+  width: 150px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e3e8ee;
+}
+.default-profile-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #e3e8ee;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.profile-overview-name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #22314a;
+}
+.profile-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.18rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.profile-edit-btn {
+  background: #ff9900;
+  color: #fff;
+  border: none;
+  padding: 5px 22px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profile-edit-btn:hover {
+  background: #e67c00;
+}
+.profile-delete-btn {
+  background-color: #dc3545;
+  color: white;
+  padding: 5px 22px;
+  margin-left: 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profile-delete-btn:hover {
+  background-color: #c82333;
+}
+
+.profile-section-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px 36px;
+}
+
+.profile-section-grid span {
+  font-size: 0.97rem;
+  color: #3a8dde;
+  font-weight: 600;
+}
+
+.profile-section-grid div {
+  font-size: 1.07rem;
+  color: #22314a;
+  margin-top: 4px;
+}
+
+.loader, .error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  font-size: 1.2rem;
+  color: #3a8dde;
+}

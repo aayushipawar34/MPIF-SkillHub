@@ -1,0 +1,242 @@
+/* =============== GLOBAL STYLES =============== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* =============== HERO SECTION =============== */
+.hero {
+  background: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1470&q=80') no-repeat center/cover;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30 20px;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  margin-bottom: 40px;
+}
+
+/* =============== HEADINGS AND TEXT =============== */
+.head {
+  text-align: center;
+  margin: 30px 0 15px;
+  color: #1e40af;
+  font-size: 2rem;
+}
+
+.pop {
+  padding: 0 30px;
+  margin-bottom: 25px;
+  font-size: 1.2rem;
+  color: #333;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.coll {
+  color: #1F3A5F;
+  font-weight: 600;
+}
+
+/* =============== BENEFITS SECTION =============== */
+.benefits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.benefit-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 350px;
+  transition: transform 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+}
+
+.benefit-card h3 {
+  text-align: center;
+  font-size: 24px;
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+
+.benefit-card p {
+  text-align: center;
+  color: #555;
+}
+
+/* =============== INFO SECTIONS (How it works / Eligibility) =============== */
+.info-sections {
+  padding: 0 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  background-color: #fff;
+}
+
+.info-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
+}
+
+.info-row.reverse {
+  flex-direction: row-reverse;
+  margin: 0;
+  padding: 0;
+}
+
+.info-image img {
+  max-width: 380px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.info-content {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.info-content h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: red;
+}
+
+.info-content p {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  padding-left: 0;
+  color: #555;
+}
+
+.info-content ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+
+.info-content ul li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  color: #1F3A5F;
+  margin-right: 10px;
+}
+
+.btn-wrapper,
+.btn-wrapper2 {
+  margin-top: 20px;
+  align-self: flex-start;
+}
+
+.info-bt {
+  background-color: #ff5722;
+  color: white;
+  padding: 10px 24px;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.info-bt:hover {
+  background-color: #e64a19;
+}
+.f-w{
+  text-align: center;
+}
+/* =============== FORM SECTION =============== */
+.form-wrapper {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 50px auto;
+}
+
+.collab-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.collab-form label {
+  font-weight: 600;
+}
+
+.collab-form input,
+.collab-form textarea,
+.collab-form select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.collab-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.collab-form button {
+  background-color: #1F3A5F;
+  color: white;
+  border: none;
+  padding: 14px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.collab-form button:hover {
+  background-color: #152438;
+}
+
+/* =============== RESPONSIVE =============== */
+@media (max-width: 768px) {
+  .info-row {
+    flex-direction: column !important;
+    text-align: center;
+  }
+
+  .info-content {
+    align-items: center;
+  }
+
+  .benefit-card {
+    width: 100%;
+    max-width: 90%;
+  }
+
+  .hero {
+    font-size: 2rem;
+  }
+}
