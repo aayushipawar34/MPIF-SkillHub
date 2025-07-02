@@ -21,7 +21,7 @@ const ManageCourses = () => {
   const fetchCourses = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/courses", {
+      const res = await axios.get("https://mpif-skillhub.onrender.com/courses", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCourses(res.data);
@@ -67,12 +67,12 @@ const ManageCourses = () => {
 
       if (isEditing) {
         if (!window.confirm("Are you sure you want to update this course?")) return;
-        await axios.put(`http://localhost:5000/courses/${editingId}`, formData, {
+        await axios.put(`https://mpif-skillhub.onrender.com/courses/${editingId}`, formData, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert("Course updated successfully!");
       } else {
-        await axios.post("http://localhost:5000/courses", formData, {
+        await axios.post("https://mpif-skillhub.onrender.com/courses", formData, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert("Course added successfully!");
@@ -104,7 +104,7 @@ const ManageCourses = () => {
     if (!window.confirm("Delete this course?")) return;
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/courses/${id}`, {
+      await axios.delete(`https://mpif-skillhub.onrender.com/courses/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Course deleted successfully!");

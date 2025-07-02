@@ -9,7 +9,7 @@ const ManageContact = () => {
   const [message, setMessage] = useState("");
 
 useEffect(() => {
-  axios.get("http://localhost:5000/contact/all")
+  axios.get("https://mpif-skillhub.onrender.com/contact/all")
     .then((res) => {
       setContacts(res.data);
     })
@@ -23,7 +23,7 @@ useEffect(() => {
       contactId: contactId,
       replyMessage: reply[email],
     };
-    const response = await axios.post("http://localhost:5000/contact/reply", payload);
+    const response = await axios.post("https://mpif-skillhub.onrender.com/contact/reply", payload);
     setMessage(response.data.message);
     setReply({ ...reply, [email]: "" });
   } catch (err) {

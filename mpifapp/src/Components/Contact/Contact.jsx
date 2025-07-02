@@ -41,7 +41,7 @@ function Contact() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch('http://localhost:5000/contact/add', {
+      const res = await fetch('https://mpif-skillhub.onrender.com/contact/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

@@ -61,7 +61,7 @@ function Courses() {
 
   const fetchCourses = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/courses");
+      const res = await axios.get("https://mpif-skillhub.onrender.com/courses");
       setCourses(res.data);
     } catch (err) {
       setError('Failed to fetch courses');

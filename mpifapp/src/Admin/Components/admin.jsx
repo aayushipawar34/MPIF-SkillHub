@@ -17,7 +17,7 @@ const AdminDashboard = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/user/users", {
+      const res = await axios.get("https://mpif-skillhub.onrender.com/user/users", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -33,7 +33,7 @@ const AdminDashboard = () => {
   const handleDelete = async (userId) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     try {
-      await axios.delete(`http://localhost:5000/user/${userId}`, {
+      await axios.delete(`https://mpif-skillhub.onrender.com/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(users.filter((u) => u._id !== userId));
@@ -45,7 +45,7 @@ const AdminDashboard = () => {
   const handleVerify = async (userId, currentStatus) => {
     try {
       await axios.put(
-        `http://localhost:5000/user/${userId}`,
+        `https://mpif-skillhub.onrender.com/user/${userId}`,
         { verified: !currentStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );

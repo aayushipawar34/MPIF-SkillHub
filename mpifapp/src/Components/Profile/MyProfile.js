@@ -58,7 +58,7 @@ const ViewProfile = () => {
           <div className="profile-overview-img">
             {user?.profilePicture ? (
               <img
-                src={`http://localhost:5000/uploads/${user.profilePicture}`}
+                src={`https://mpif-skillhub.onrender.com/uploads/${user.profilePicture}`}
                 alt="Profile"
               />
             ) : (

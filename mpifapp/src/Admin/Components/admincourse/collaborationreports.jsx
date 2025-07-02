@@ -10,7 +10,7 @@ const ManageCollaboration = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/collebrative/all")
+      .get("https://mpif-skillhub.onrender.com/collebrative/all")
       .then((res) => {
         setCollaborations(res.data);
       })
@@ -25,7 +25,7 @@ const ManageCollaboration = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:5000/collebrative/reply",
+        "https://mpif-skillhub.onrender.com/collebrative/reply",
         payload
       );
 

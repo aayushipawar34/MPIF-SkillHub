@@ -47,7 +47,7 @@ const AdmissionPage = () => {
   const [courses, setCourses] = useState([]);
 
 useEffect(() => {
-  axios.get("http://localhost:5000/courses").then((res) => {
+  axios.get("https://mpif-skillhub.onrender.com/courses").then((res) => {
     setCourses(res.data);
   });
 }, []);
@@ -58,7 +58,7 @@ useEffect(() => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const res = await fetch("http://localhost:5000/profile", {
+      const res = await fetch("https://mpif-skillhub.onrender.com/profile", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -177,7 +177,7 @@ const handleSubmit = async (e) => {
 
     const token = localStorage.getItem("token");
 
-    const response = await fetch('http://localhost:5000/admission', {
+    const response = await fetch('https://mpif-skillhub.onrender.com/admission', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,

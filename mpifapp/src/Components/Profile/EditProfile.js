@@ -114,7 +114,7 @@ const EditProfile = () => {
                 />
               ) : user?.profilePicture ? (
                 <img
-                  src={`http://localhost:5000/uploads/${user.profilePicture}`}
+                  src={`https://mpif-skillhub.onrender.com/uploads/${user.profilePicture}`}
                   alt="Profile"
                   className="rounded-circle shadow"
                   style={{ width: "130px", height: "130px", objectFit: "cover" }}

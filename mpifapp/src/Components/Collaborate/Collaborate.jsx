@@ -19,7 +19,7 @@ const CollaborationPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/collebrative/add", {
+      const res = await fetch("https://mpif-skillhub.onrender.com/collebrative/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

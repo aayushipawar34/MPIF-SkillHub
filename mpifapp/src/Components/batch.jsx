@@ -5,7 +5,7 @@ function OpenBatchesNotice() {
   const [batches, setBatches] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/batch/open")
+    fetch("https://mpif-skillhub.onrender.com/batch/open")
       .then((res) => res.json())
       .then((data) => setBatches(data))
       .catch((err) => console.error("Failed to fetch batches:", err));

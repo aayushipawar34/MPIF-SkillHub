@@ -20,15 +20,15 @@ const ManageBatches = () => {
   }, []);
 
   const loadBatches = async () => {
-    const res = await axios.get("http://localhost:5000/batch/open");
+    const res = await axios.get("https://mpif-skillhub.onrender.com/batch/open");
     setBatches(res.data);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = editingId
-      ? `http://localhost:5000/batch/update/${editingId}`
-      : "http://localhost:5000/batch/add";
+      ? `https://mpif-skillhub.onrender.com/batch/update/${editingId}`
+      : "https://mpif-skillhub.onrender.com/batch/add";
 
     await axios({
       method: editingId ? "PATCH" : "POST",
@@ -47,7 +47,7 @@ const ManageBatches = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/batch/delete/${id}`);
+    await axios.delete(`https://mpif-skillhub.onrender.com/batch/delete/${id}`);
     loadBatches();
   };
 

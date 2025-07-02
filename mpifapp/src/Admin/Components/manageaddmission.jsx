@@ -8,8 +8,8 @@ import { toast } from "react-toastify";
 
 
 
-const baseURL = "http://localhost:5000/admission";
-const FILE_BASE_URL = "http://localhost:5000/uploads/";
+const baseURL = "https://mpif-skillhub.onrender.com/admission";
+const FILE_BASE_URL = "https://mpif-skillhub.onrender.com/uploads/";
 
 const Container = styled.div`
   max-width: 900px;
@@ -316,7 +316,7 @@ const handleStatusChange = async (id, newStatus) => {
       };
     }
 
-    const res = await axios.put(`http://localhost:5000/admission/update-status/${id}`, requestData);
+    const res = await axios.put(`https://mpif-skillhub.onrender.com/admission/update-status/${id}`, requestData);
 
     alert("Status updated!");
     window.location.reload();

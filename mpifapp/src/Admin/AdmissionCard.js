@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { FaFilePdf, FaFileImage, FaTrashAlt, FaEdit, FaChevronDown, FaChevronUp } from "react-icons/fa";
 
-const FILE_BASE_URL = "http://localhost:5000/uploads/";
+const FILE_BASE_URL = "https://mpif-skillhub.onrender.com/uploads/";
 
 const Card = styled.div`
   background: #fff;
