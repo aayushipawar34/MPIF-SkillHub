@@ -46,37 +46,34 @@ const SignIn = () => {
 
   // 🔁 Google Redirect Login Result
   useEffect(() => {
-    const handleRedirectResult = async () => {
-      try {
-        const result = await getRedirectResult(auth);
-        if (result?.user) {
-          const user = result.user;
-          const res = await googleAuth({
-            email: user.email,
-            name: user.displayName,
-            googleId: user.uid,
-          });
+  const handleRedirectResult = async () => {
+    try {
+      const result = await getRedirectResult(auth);
+      if (result?.user) {
+        const token = await result.user.getIdToken(); // 🔥 Get Firebase ID token
 
-          const { token, user: userData } = res.data;
+        const res = await googleAuth({ token }); // ✅ Send only token to backend
 
-          if (token) {
-            const { _id, username, role } = userData;
-            localStorage.setItem("user", JSON.stringify({ _id, username, role }));
-            localStorage.setItem("role", role);
-            localStorage.setItem("token", token);
+        const { token: authToken, user: userData } = res.data;
 
-            alert(res.data.message || "Google login successful");
-            navigate(role === "admin" ? "/admin" : "/");
-            window.location.reload();
-          }
+        if (authToken) {
+          const { _id, username, role } = userData;
+          localStorage.setItem("user", JSON.stringify({ _id, username, role }));
+          localStorage.setItem("role", role);
+          localStorage.setItem("token", authToken);
+
+          alert(res.data.message || "Google login successful");
+          navigate(role === "admin" ? "/admin" : "/");
+          window.location.reload();
         }
-      } catch (err) {
-        console.error("Google Redirect Error:", err);
       }
-    };
+    } catch (err) {
+      console.error("Google Redirect Error:", err);
+    }
+  };
 
-    handleRedirectResult();
-  }, []);
+  handleRedirectResult();
+}, []);
 
   const handleGoogleSignIn = async () => {
     try {
