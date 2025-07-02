@@ -44,36 +44,35 @@ const SignIn = () => {
     }
   };
 
-  // 🔁 Google Redirect Login Result
+  // ✅ Google Redirect Result
   useEffect(() => {
-  const handleRedirectResult = async () => {
-    try {
-      const result = await getRedirectResult(auth);
-      if (result?.user) {
-        const token = await result.user.getIdToken(); // 🔥 Get Firebase ID token
+    const handleRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result?.user) {
+          const token = await result.user.getIdToken();
 
-        const res = await googleAuth({ token }); // ✅ Send only token to backend
+          const res = await googleAuth({ token });
+          const { token: authToken, user: userData } = res.data;
 
-        const { token: authToken, user: userData } = res.data;
+          if (authToken) {
+            const { _id, username, role } = userData;
+            localStorage.setItem("user", JSON.stringify({ _id, username, role }));
+            localStorage.setItem("role", role);
+            localStorage.setItem("token", authToken);
 
-        if (authToken) {
-          const { _id, username, role } = userData;
-          localStorage.setItem("user", JSON.stringify({ _id, username, role }));
-          localStorage.setItem("role", role);
-          localStorage.setItem("token", authToken);
-
-          alert(res.data.message || "Google login successful");
-          navigate(role === "admin" ? "/admin" : "/");
-          window.location.reload();
+            alert(res.data.message || "Google login successful");
+            navigate(role === "admin" ? "/admin" : "/");
+            window.location.reload();
+          }
         }
+      } catch (err) {
+        console.error("Google Redirect Error:", err);
       }
-    } catch (err) {
-      console.error("Google Redirect Error:", err);
-    }
-  };
+    };
 
-  handleRedirectResult();
-}, []);
+    handleRedirectResult();
+  }, []);
 
   const handleGoogleSignIn = async () => {
     try {
@@ -125,8 +124,8 @@ const SignIn = () => {
 
         <div className="text-center mt-3">Or</div>
 
-        <button className="google-btn" type="button" onClick={handleGoogleSignIn}>
-          <FaGoogle className="google-icon" /> Sign in with Google
+        <button className="google-btn btn btn-danger w-100 mt-2" type="button" onClick={handleGoogleSignIn}>
+          <FaGoogle className="google-icon me-2" /> Sign in with Google
         </button>
       </div>
     </div>
