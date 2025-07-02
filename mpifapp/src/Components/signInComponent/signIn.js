@@ -1,18 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { signIn, googleAuth } from "../../Utils/api";
 import { FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithRedirect, getRedirectResult } from "firebase/auth";
 import { auth, provider } from "../firebaseConfig";
 
 const SignIn = () => {
   const navigate = useNavigate();
 
-  const [userData, setUserData] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [userData, setUserData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
@@ -35,14 +31,12 @@ const SignIn = () => {
         return;
       }
 
-      // ✅ Only save minimal data in localStorage
       const { _id, username, role } = user;
       localStorage.setItem("user", JSON.stringify({ _id, username, role }));
       localStorage.setItem("role", role);
       localStorage.setItem("token", token);
 
       setMessage(msg);
-
       navigate(role === "admin" ? "/admin" : "/");
       window.location.reload();
     } catch (err) {
@@ -50,36 +44,45 @@ const SignIn = () => {
     }
   };
 
+  // 🔁 Google Redirect Login Result
+  useEffect(() => {
+    const handleRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result?.user) {
+          const user = result.user;
+          const res = await googleAuth({
+            email: user.email,
+            name: user.displayName,
+            googleId: user.uid,
+          });
+
+          const { token, user: userData } = res.data;
+
+          if (token) {
+            const { _id, username, role } = userData;
+            localStorage.setItem("user", JSON.stringify({ _id, username, role }));
+            localStorage.setItem("role", role);
+            localStorage.setItem("token", token);
+
+            alert(res.data.message || "Google login successful");
+            navigate(role === "admin" ? "/admin" : "/");
+            window.location.reload();
+          }
+        }
+      } catch (err) {
+        console.error("Google Redirect Error:", err);
+      }
+    };
+
+    handleRedirectResult();
+  }, []);
+
   const handleGoogleSignIn = async () => {
     try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-
-      const res = await googleAuth({
-        email: user.email,
-        name: user.displayName,
-        googleId: user.uid,
-      });
-
-      const { token, user: userData } = res.data;
-
-      if (token) {
-        const { _id, username, role } = userData;
-        localStorage.setItem("user", JSON.stringify({ _id, username, role }));
-        localStorage.setItem("role", role);
-        localStorage.setItem("token", token);
-
-        alert(res.data.message || "Google login successful");
-
-        setTimeout(() => {
-          navigate(role === "admin" ? "/admin" : "/");
-          window.location.reload();
-        }, 1000);
-      } else {
-        alert("Token missing from server response");
-      }
+      await signInWithRedirect(auth, provider);
     } catch (err) {
-      console.error("Google Sign-In Error:", err);
+      console.error("Google Sign-In Redirect Error:", err);
       alert("Google Sign-In Failed");
     }
   };
@@ -111,24 +114,15 @@ const SignIn = () => {
             onChange={handleChange}
             required
           />
-
           <button type="submit" className="btn btn-primary w-100 mb-3">
             Sign In
           </button>
 
-          <h6>
-            Don’t have an account? <Link to="/sign-up">Sign Up</Link>
-          </h6>
-          <h6>
-            <Link to="/forgot-password">Forgot Password?</Link>
-          </h6>
+          <h6>Don’t have an account? <Link to="/sign-up">Sign Up</Link></h6>
+          <h6><Link to="/forgot-password">Forgot Password?</Link></h6>
         </form>
 
-        <button
-          type="button"
-          className="btn btn-secondary w-100 mt-3"
-          onClick={() => navigate("/")}
-        >
+        <button type="button" className="btn btn-secondary w-100 mt-3" onClick={() => navigate("/")}>
           Back to Home
         </button>
 
