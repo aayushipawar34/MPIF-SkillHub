@@ -3,6 +3,7 @@ import { User } from "../model/user.model.js";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
+import admin from "../middlewares/firebaseAdmin.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -79,41 +80,44 @@ const user = await User.create({
 };
 export const googleAuthAction = async (req, res) => {
   try {
-    const { email, name, googleId } = req.body;
-    console.log("Google Auth Payload:", { email, name, googleId });
+    const { idToken } = req.body;
 
-    if (!email || !googleId) {
-      return res.status(400).json({ error: "Missing Google credentials" });
+    if (!idToken) {
+      return res.status(400).json({ error: "idToken is required" });
     }
 
+    // ✅ Firebase Admin SDK se token verify karo
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const { email, name, uid } = decodedToken;
+
+    if (!email || !uid) {
+      return res.status(400).json({ error: "Invalid Google user info" });
+    }
+
+    // ✅ User database mein hai ya nahi
     let user = await User.findOne({ email });
 
     if (!user) {
       user = await User.create({
-        username: name,
+        username: name || email.split("@")[0],
         email,
-        googleId,
+        googleId: uid,
         verified: true,
         role: email === "admin@gmail.com" ? "admin" : "user",
       });
     }
 
-    const JWT_SECRET = process.env.JWT_SECRET;
-
-    if (!JWT_SECRET) {
-      return res.status(500).json({ error: "JWT_SECRET not set in .env file" });
-    }
-
+    // ✅ Token create karna
     const token = jwt.sign(
       {
         id: user._id,
         email: user.email,
         role: user.role,
       },
-      JWT_SECRET,
+      process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
-   console.log("token",token);
+
     return res.status(200).json({
       message: "Google login successful",
       user,
@@ -121,7 +125,10 @@ export const googleAuthAction = async (req, res) => {
     });
   } catch (err) {
     console.error("Google Auth Error:", err);
-    res.status(500).json({ error: "Internal Server Error", detail: err.message });
+    return res.status(500).json({
+      error: "Google authentication failed",
+      detail: err.message,
+    });
   }
 };
 

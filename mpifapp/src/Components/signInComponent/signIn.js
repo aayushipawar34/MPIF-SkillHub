@@ -51,38 +51,36 @@ const SignIn = () => {
   };
 
   const handleGoogleSignIn = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
 
-      const res = await googleAuth({
-        email: user.email,
-        name: user.displayName,
-        googleId: user.uid,
-      });
+    const idToken = await user.getIdToken();
+    const res = await googleAuth({ idToken });
 
-      const { token, user: userData } = res.data;
+    const { token, user: userData } = res.data;
 
-      if (token) {
-        const { _id, username, role } = userData;
-        localStorage.setItem("user", JSON.stringify({ _id, username, role }));
-        localStorage.setItem("role", role);
-        localStorage.setItem("token", token);
+    if (token) {
+      const { _id, username, role } = userData;
+      localStorage.setItem("user", JSON.stringify({ _id, username, role }));
+      localStorage.setItem("role", role);
+      localStorage.setItem("token", token);
 
-        alert(res.data.message || "Google login successful");
+      alert(res.data.message || "Google login successful");
 
-        setTimeout(() => {
-          navigate(role === "admin" ? "/admin" : "/");
-          window.location.reload();
-        }, 1000);
-      } else {
-        alert("Token missing from server response");
-      }
-    } catch (err) {
-      console.error("Google Sign-In Error:", err);
-      alert("Google Sign-In Failed");
+      setTimeout(() => {
+        navigate(role === "admin" ? "/admin" : "/");
+        window.location.reload();
+      }, 1000);
+    } else {
+      alert("Token missing from server response");
     }
-  };
+  } catch (err) {
+    console.error("Google Sign-In Error:", err);
+    alert("Google Sign-In Failed");
+  }
+};
+
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
