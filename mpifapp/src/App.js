@@ -53,6 +53,7 @@ const App = () => {
       <Routes>
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/__/auth/handler" element={<div>Redirecting...</div>} />
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/my-profile" element={<ViewProfile />} />
