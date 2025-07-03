@@ -4,10 +4,7 @@ import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { OAuth2Client } from "google-auth-library";
 dotenv.config();
-
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // Utility to generate 6-digit OTP
 const generateOTP = () => Math.floor(100000 + Math.random() * 900000);
@@ -27,7 +24,8 @@ const sendOTP = (email, otp) => {
       from: process.env.GMAIL_ID,
       to: email,
       subject: "Email Verification OTP",
-      html: `<h3>Your OTP is: <b>${otp}</b></h3><p>Please enter this OTP to verify your account.</p>`
+      html: `<h3>Your OTP is: <b>${otp}</b></h3>
+             <p>Please enter this OTP to verify your account.</p>`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -46,6 +44,7 @@ export const signUpAction = async (req, res) => {
     }
 
     const { username, email, contact, password } = req.body;
+
     const existingUser = await User.findOne({ $or: [{ email }, { contact }, { username }] });
     if (existingUser) {
       return res.status(409).json({ error: "Email, username, or contact already exists" });
@@ -60,49 +59,52 @@ export const signUpAction = async (req, res) => {
       return res.status(500).json({ error: "Failed to send OTP" });
     }
 
-    const isAdmin = email === "admin@gmail.com";
-    const user = await User.create({
-      username,
-      email,
-      contact,
-      password: hashedPassword,
-      role: isAdmin ? "admin" : "user",
-      verified: isAdmin ? true : false,
-      otp: isAdmin ? null : otp,
-    });
+const isAdmin = email === "admin@gmail.com";
+
+const user = await User.create({
+  username,
+  email,
+  contact,
+  password: hashedPassword,
+  role: isAdmin ? "admin" : "user",
+  verified: isAdmin ? true : false,
+  otp: isAdmin ? null : otp,
+});
+
 
     res.status(201).json({ message: "User created. Verify your email using OTP.", user });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error", detail: err.message });
   }
 };
-
-// Google Auth
 export const googleAuthAction = async (req, res) => {
   try {
-    const { token } = req.body;
-    if (!token) return res.status(400).json({ error: "Token is required" });
+    const { email, name, googleId } = req.body;
+    console.log("Google Auth Payload:", { email, name, googleId });
 
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
-
-    const payload = ticket.getPayload();
-    const { email, name } = payload;
+    if (!email || !googleId) {
+      return res.status(400).json({ error: "Missing Google credentials" });
+    }
 
     let user = await User.findOne({ email });
+
     if (!user) {
       user = await User.create({
         username: name,
         email,
+        googleId,
         verified: true,
         role: email === "admin@gmail.com" ? "admin" : "user",
       });
     }
 
     const JWT_SECRET = process.env.JWT_SECRET;
-    const authToken = jwt.sign(
+
+    if (!JWT_SECRET) {
+      return res.status(500).json({ error: "JWT_SECRET not set in .env file" });
+    }
+
+    const token = jwt.sign(
       {
         id: user._id,
         email: user.email,
@@ -111,22 +113,25 @@ export const googleAuthAction = async (req, res) => {
       JWT_SECRET,
       { expiresIn: "7d" }
     );
-
-    res.status(200).json({
+   console.log("token",token);
+    return res.status(200).json({
       message: "Google login successful",
-      token: authToken,
       user,
+      token,
     });
   } catch (err) {
     console.error("Google Auth Error:", err);
-    res.status(500).json({ error: "Google Auth Failed", detail: err.message });
+    res.status(500).json({ error: "Internal Server Error", detail: err.message });
   }
 };
 
-
 export const verifyAccount = async (req, res) => {
   const { email, otp } = req.body;
+  console.log("OTP Verify Request:", { email, otp });
+
   const user = await User.findOne({ email, otp });
+  console.log("Found User:", user);
+
   if (!user) return res.status(400).json({ error: "Invalid OTP or email" });
 
   user.verified = true;
@@ -135,6 +140,8 @@ export const verifyAccount = async (req, res) => {
 
   res.status(200).json({ message: "Account verified successfully" });
 };
+
+
 
 // Sign In
 export const signInAction = async (req, res) => {
@@ -150,12 +157,11 @@ export const signInAction = async (req, res) => {
     const validPassword = bcrypt.compareSync(password, user.password);
     if (!validPassword) return res.status(401).json({ error: "Invalid password" });
 
-    const token = jwt.sign({
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role
-    }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign(
+      { id: user._id, name: user.name, email: user.email, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
     res.status(200).json({
       message: "Sign In Success",
@@ -164,8 +170,8 @@ export const signInAction = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
-        verified: user.verified
-      }
+        verified:user.verified,
+      },
     });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
@@ -176,6 +182,7 @@ export const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
+
     if (!user) return res.status(404).json({ error: "Email not registered" });
 
     const otp = generateOTP();
@@ -192,6 +199,7 @@ export const forgotPassword = async (req, res) => {
 export const resetPassword = async (req, res) => {
   try {
     const { email, otp, newPassword } = req.body;
+
     const user = await User.findOne({ email, otp });
     if (!user) return res.status(400).json({ error: "Invalid OTP or email" });
 
