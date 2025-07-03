@@ -3,9 +3,9 @@ import { getAllCourses, addCourse, updateCourse, deleteCourse } from '../control
 import { verifyUser } from '../middlewares/verifyUser.js';
 
 const router = express.Router();
-router.get('/courses', getAllCourses);
-router.post('/courses', verifyUser, addCourse); 
-router.put('/courses/:id', verifyUser, updateCourse); 
-router.delete('/courses/:id', verifyUser, deleteCourse); 
+router.get('/', getAllCourses);
+router.post('/', verifyUser, addCourse);
+router.put('/:id', verifyUser, updateCourse);
+router.delete('/:id', verifyUser, deleteCourse);
 
 export default router;

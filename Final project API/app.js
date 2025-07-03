@@ -51,7 +51,7 @@ app.use("/profile", ProfileRouter);
 app.use("/admission", AdmissionRouter);
 app.use("/collebrative", collebrativeRouter);
 app.use("/contact", contactRouter);
-app.use("/", CourseRouter);
+app.use("/courses", CourseRouter);
 app.use("/batch", batchRoutes);
 
 // ✅ DB Connection + Server Start

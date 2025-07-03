@@ -13,6 +13,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import OpenBatchesNotice from '../batch';
+import { course as getCourses } from '../../Utils/api'; 
+
 
 
 const AdmissionPage = () => {
@@ -47,10 +49,11 @@ const AdmissionPage = () => {
   const [courses, setCourses] = useState([]);
 
 useEffect(() => {
-  axios.get("https://mpif-skillhub.onrender.com/courses").then((res) => {
-    setCourses(res.data);
-  });
+  getCourses()
+    .then((res) => setCourses(res.data))
+    .catch(() => toast.error('Failed to fetch courses'));
 }, []);
+
 
 useEffect(() => {
   const fetchUser = async () => {

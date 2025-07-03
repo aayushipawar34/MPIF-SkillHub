@@ -4,6 +4,7 @@ import './courses.css';
 import Header from '../Header/header';
 import Footer from '../Footer/footer';
 import { Link } from 'react-router-dom';
+import { course as getCourses } from '../../Utils/api';
 
 
 const teamMembers = [
@@ -56,17 +57,10 @@ function Courses() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchCourses();
+    getCourses()
+      .then((res) => setCourses(res.data))
+      .catch(() => setError('Failed to fetch courses'));
   }, []);
-
-  const fetchCourses = async () => {
-    try {
-      const res = await axios.get("https://mpif-skillhub.onrender.com/courses");
-      setCourses(res.data);
-    } catch (err) {
-      setError('Failed to fetch courses');
-    }
-  };
 
   return (
     <>
