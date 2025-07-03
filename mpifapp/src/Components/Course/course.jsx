@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import './courses.css';
 import Header from '../Header/header';
 import Footer from '../Footer/footer';
 import { Link } from 'react-router-dom';
-import { course as getCourses } from '../../Utils/api';
+import { getCourses } from '../../Utils/api';
+
 
 
 const teamMembers = [

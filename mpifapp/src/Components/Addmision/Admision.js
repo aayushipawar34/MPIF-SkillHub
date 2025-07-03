@@ -13,7 +13,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import OpenBatchesNotice from '../batch';
-import { course as getCourses } from '../../Utils/api'; 
+import { getCourses } from '../../Utils/api';
+
 
 
 
