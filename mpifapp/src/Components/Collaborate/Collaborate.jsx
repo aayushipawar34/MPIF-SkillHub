@@ -3,6 +3,7 @@ import './Collaborate.css';
 import Header from '../Header/header';
 import Footer from '../Footer/footer';
 import { FaCheckCircle } from 'react-icons/fa';
+import { submitCollaboration } from '../../Utils/api';
 
 const CollaborationPage = () => {
   const [formData, setFormData] = useState({
@@ -15,35 +16,26 @@ const CollaborationPage = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch("https://mpif-skillhub.onrender.com/collebrative/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await submitCollaboration(formData);
+    if (res.status === 200) {
+      alert("Collaboration request submitted successfully!");
+      setFormData({
+        name: '',
+        email: '',
+        organization: '',
+        joinmessage: '',
       });
-
-      const result = await res.json();
-      if (res.ok) {
-        alert("Collaboration request submitted successfully!");
-        setFormData({
-          name: '',
-          email: '',
-          organization: '',
-          joinmessage: '',
-        });
-      } else {
-        alert(result.message || "Something went wrong.");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Server error. Please try again later.");
+    } else {
+      alert(res.data.message || "Something went wrong.");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    alert("Server error. Please try again later.");
+  }
+};
 
   return (
     <>

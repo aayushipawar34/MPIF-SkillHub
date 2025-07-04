@@ -19,7 +19,7 @@ const ForgotOrResetPassword = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/user/forgot-password", { email });
+      const res = await axios.post("https://mpif-skillhub.onrender.com/user/forgot-password", { email });
       setMessage(res.data.message || "OTP sent to your email.");
       setStep("reset");
     } catch (err) {
@@ -36,7 +36,7 @@ const ForgotOrResetPassword = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/user/reset-password", {
+      const res = await axios.post("https://mpif-skillhub.onrender.com/user/reset-password", {
         email,
         otp,
         newPassword,

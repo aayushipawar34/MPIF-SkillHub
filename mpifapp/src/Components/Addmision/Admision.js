@@ -11,9 +11,8 @@ import Header from '../Header/header';
 import Footer from '../Footer/footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
 import OpenBatchesNotice from '../batch';
-import { getCourses } from '../../Utils/api';
+import { getCourses,getProfile, submitAdmission } from "../../Utils/api";
 
 
 
@@ -62,13 +61,7 @@ useEffect(() => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const res = await fetch("https://mpif-skillhub.onrender.com/profile", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      const res = await getProfile(token);
       const data = await res.json();
       if (data && data._id) {
         setFormData((prev) => ({ ...prev, user: data._id, name: data.username, email: data.email }));
@@ -180,15 +173,7 @@ const handleSubmit = async (e) => {
     });
 
     const token = localStorage.getItem("token");
-
-    const response = await fetch('https://mpif-skillhub.onrender.com/admission', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: data,
-    });
-
+    const response = await submitAdmission(data, token);
     if (!response.ok) {
       const resData = await response.json();
       throw new Error(resData.message || 'Submission failed');

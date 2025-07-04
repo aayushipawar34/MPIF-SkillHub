@@ -5,6 +5,8 @@ import Header from '../Header/header';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
+import { submitContactMessage } from '../../Utils/api';
+
 
 function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -35,31 +37,27 @@ function Contact() {
     return true;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validateForm()) return;
 
-    setIsSubmitting(true);
-    try {
-      const res = await fetch('https://mpif-skillhub.onrender.com/contact/add', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      const result = await res.json();
-
-      if (res.ok) {
-        toast.success(result.message || 'Message sent successfully!');
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        toast.error(result.message || 'Something went wrong!');
-      }
-    } catch {
-      toast.error('Failed to send message. Server error.');
-    } finally {
-      setIsSubmitting(false);
+  setIsSubmitting(true);
+  try {
+    const res = await submitContactMessage(formData);
+    if (res.status === 200) {
+      toast.success(res.data.message || 'Message sent successfully!');
+      setFormData({ name: '', email: '', message: '' });
+    } else {
+      toast.error(res.data.message || 'Something went wrong!');
     }
-  };
+  } catch (err) {
+    console.error(err);
+    toast.error('Failed to send message. Server error.');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   return (
     <>

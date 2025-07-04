@@ -35,10 +35,19 @@ export const deleteCourse = (id, token) =>
   });
 
 // 📥 Admission
-export const submitAdmission = (formData) =>
+export const submitAdmission = (formData, token) =>
   axiosInstance.post('/admission', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data',
+    },
   });
+export const submitCollaboration = (formData) =>
+  axiosInstance.post('/collebrative/add', formData);
+
 
 // 📬 Contact
-export const contact = (formData) => axiosInstance.post('/contact/add', formData);
+// 📬 Contact
+export const submitContactMessage = (formData) =>
+  axiosInstance.post('/contact/add', formData);
+
