@@ -153,7 +153,7 @@ router.put(
 );
 router.put('/update-status/:id', updateStatus);
 
-router.get("/admission/check/:userId", async (req, res) => {
+router.get("/check/:userId", async (req, res) => {
   const { userId } = req.params;
   try {
     const existing = await Admission.findOne({ user: userId });
