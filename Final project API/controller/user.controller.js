@@ -82,19 +82,24 @@ export const googleAuthAction = async (req, res) => {
   try {
     const { idToken } = req.body;
 
+    console.log("📥 idToken received from frontend:", idToken);
+
     if (!idToken) {
       return res.status(400).json({ error: "idToken is required" });
     }
 
-    // ✅ Firebase Admin SDK se token verify karo
+    // 🔍 Step 1: Decode token using Firebase Admin SDK
     const decodedToken = await admin.auth().verifyIdToken(idToken);
+    console.log("✅ Token verified:", decodedToken);
+
     const { email, name, uid } = decodedToken;
+    console.log("🔍 Extracted Info:", { email, name, uid });
 
     if (!email || !uid) {
       return res.status(400).json({ error: "Invalid Google user info" });
     }
 
-    // ✅ User database mein hai ya nahi
+    // 🔍 Step 2: Check if user already exists
     let user = await User.findOne({ email });
 
     if (!user) {
@@ -105,9 +110,12 @@ export const googleAuthAction = async (req, res) => {
         verified: true,
         role: email === "admin@gmail.com" ? "admin" : "user",
       });
+      console.log("🆕 New user created via Google");
+    } else {
+      console.log("✅ Existing user found");
     }
 
-    // ✅ Token create karna
+    // 🔍 Step 3: Sign JWT
     const token = jwt.sign(
       {
         id: user._id,
@@ -124,13 +132,14 @@ export const googleAuthAction = async (req, res) => {
       token,
     });
   } catch (err) {
-    console.error("Google Auth Error:", err);
+    console.error("❌ Google Sign-In Error:", err);
     return res.status(500).json({
       error: "Google authentication failed",
       detail: err.message,
     });
   }
 };
+
 
 export const verifyAccount = async (req, res) => {
   const { email, otp } = req.body;
