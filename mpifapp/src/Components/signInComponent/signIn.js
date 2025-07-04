@@ -55,8 +55,11 @@ const SignIn = () => {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
+    
     const idToken = await user.getIdToken();
-    const res = await googleAuth({ idToken });
+    console.log("🔥 Sending idToken to backend:", idToken); // Add this for debug
+    const res = await googleAuth(idToken); // ✅ Fixed here
+
 
     const { token, user: userData } = res.data;
 
