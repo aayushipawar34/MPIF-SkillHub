@@ -89,31 +89,34 @@ const SignUp = () => {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
+    // ✅ Get the Firebase ID token from user object
+    const idToken = await user.getIdToken();
+
+    // ✅ Send idToken only to backend
     const res = await googleAuth({
-      email: user.email,
-      name: user.displayName,
-      googleId: user.uid,
+      token: idToken,
     });
 
     const { token, user: userData } = res.data;
 
     if (token) {
-      const { googleId, ...filteredUser } = userData; 
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(filteredUser));
+      const { googleId, ...filteredUser } = userData;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(filteredUser));
 
       alert(res.data.message || "Google login successful");
       setTimeout(() => {
         navigate("/");
       }, 1000);
     } else {
-      alert('Token missing from server response');
+      alert("Token missing from server response");
     }
   } catch (err) {
     console.error("Google Signup Error:", err);
-    alert('Google Signup Failed');
+    alert("Google Signup Failed");
   }
 };
+
 
 
   // OTP 
