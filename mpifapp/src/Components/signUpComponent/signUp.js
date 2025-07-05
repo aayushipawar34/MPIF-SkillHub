@@ -88,11 +88,9 @@ const SignUp = () => {
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
+    const idToken = await user.getIdToken(); // ✅ valid Firebase token
 
-    // 🔐 Get ID token as a string (very important!)
-    const idToken = await user.getIdToken(); // ✅
-
-    const res = await googleAuth(idToken); // ✅ no need to wrap in another object
+    const res = await googleAuth(idToken); // ✅ correct format
 
     const { token, user: userData } = res.data;
 
@@ -113,9 +111,6 @@ const SignUp = () => {
     alert('Google Signup Failed');
   }
 };
-
-
-
 
   // OTP 
   if (showVerify) {
