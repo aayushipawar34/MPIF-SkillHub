@@ -104,13 +104,14 @@ export const googleAuthAction = async (req, res) => {
     let user = await User.findOne({ email });
 
     if (!user) {
-      user = await User.create({
-        username: name || email.split("@")[0],
-        email,
-        googleId: uid,
-        verified: true,
-        role: email === "admin@gmail.com" ? "admin" : "user",
-      });
+    user = await User.create({
+  username: name || email.split("@")[0],
+  email,
+  contact: Date.now(), // ✅ any unique dummy contact number
+  googleId: uid,
+  verified: true,
+  role: email === "admin@gmail.com" ? "admin" : "user",
+});
       console.log("🆕 New user created via Google");
     } else {
       console.log("✅ Existing user found");

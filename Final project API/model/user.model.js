@@ -12,14 +12,16 @@ const userSchema = new mongoose.Schema({
       return !this.googleId;
     },
   },
-
-  contact: {
-    type: Number,
-    required: function () {
-      return !this.googleId;
-    },
-    unique: true,
+contact: {
+  type: Number,
+  required: function () {
+    return !this.googleId;
+    // required only for non-Google signups
   },
+  unique: true,
+  sparse: true, // ✅ Add this
+},
+
 
   email: {
     type: String,
