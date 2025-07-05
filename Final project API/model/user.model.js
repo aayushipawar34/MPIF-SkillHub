@@ -14,12 +14,9 @@ const userSchema = new mongoose.Schema({
   },
 contact: {
   type: Number,
-  required: function () {
-    return !this.googleId;
-    // required only for non-Google signups
-  },
+  required: false,      // ✅ make optional
   unique: true,
-  sparse: true, // ✅ Add this
+  sparse: true,         // ✅ ignore duplicates if value is missing/null
 },
 
 
