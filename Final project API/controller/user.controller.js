@@ -78,9 +78,10 @@ const user = await User.create({
     res.status(500).json({ error: "Internal Server Error", detail: err.message });
   }
 };
+
 export const googleAuthAction = async (req, res) => {
   try {
-    const { idToken } = req.body;
+    const { token: idToken } = req.body;
 
     console.log("📥 idToken received from frontend:", idToken);
 
