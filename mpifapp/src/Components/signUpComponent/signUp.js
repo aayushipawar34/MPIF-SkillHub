@@ -89,14 +89,15 @@ const SignUp = () => {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
-    const idToken = await user.getIdToken(); // ✅ get Firebase token
+    // 🔐 Get ID token as a string (very important!)
+    const idToken = await user.getIdToken(); // ✅
 
-    const res = await googleAuth({ token: idToken }); // ✅ send { token }
+    const res = await googleAuth(idToken); // ✅ no need to wrap in another object
 
     const { token, user: userData } = res.data;
 
     if (token) {
-      const { googleId, ...filteredUser } = userData; 
+      const { googleId, ...filteredUser } = userData;
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(filteredUser));
 
@@ -112,6 +113,7 @@ const SignUp = () => {
     alert('Google Signup Failed');
   }
 };
+
 
 
 
